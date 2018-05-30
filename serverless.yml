@@ -7,9 +7,27 @@ provider:
   region: us-west-1
   stage: dev
 
-# plugins:
-#   - serverless-offline
+plugins:
+  - serverless-offline
 
 functions:
-  hello:
-    handler: src/helloworld.handler
+  api:
+    handler: src/api.handler
+    events: 
+      - http: GET /api
+  todos: 
+    handler: src/todos.handler
+    events: 
+      - http:
+          path: /todos
+          method: GET
+  todo:
+    handler: src/todo.handler
+    events:
+      - http:
+          path: /todo/{id}
+          method: GET
+          request:
+            parameters:
+              paths:
+                id: true
